@@ -98,7 +98,7 @@ app_ui <- function(request) {
 
                     br(),
                     h4("Select the directory where the folders of the patients' data are located or load previous session"),
-                    shinyDirButton("dir", "Choose directory", "Upload"),
+                    shinyDirButton("dir", "Choose directory", "Please select a folder"),
                     br(),
                     br(),
                     h4("Or"),
