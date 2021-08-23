@@ -3517,6 +3517,7 @@ app_server <- function(input, output, session) {
 
             just_restored_session_logo <- FALSE
             motif_datasets <<- logo_result$motif_datasets
+            print(3520)
             motif_all <<- logo_result$motif_all
             msgLogo <<- logo_result$confirm
 
@@ -3576,11 +3577,14 @@ app_server <- function(input, output, session) {
 
                 if (input$select_region_logo == "All V region" || input$select_region_logo == "CDR3") {
                     if (input$VisualisationDataset == "All Data") {
+                        print(3579)
                         # Create custom colour scheme
                         # cs1 = make_col_scheme(chars=c("F","W","A","I","L","V","M","C","P","G","Y","T","S","H","K","R","E","D","Q","N"),
                         # cols=c("#1E90FF", "#BA55D3", "#0000FF", "#0000FF", "#0000FF", "#0000FF", "#C6E2FF", "#C6E2FF", "#FFD700", "#00EE00", "#C1FFC1", "#54FF9F", "#54FF9F", "#FF0000", "#FF0000", "#FF0000", "#FFD700", "#FFD700", "#ED9121", "#ED9121"))
                         # ggseqlogo(frequenciesTables_results$region_with_specific_length, method = "prob", col_scheme=cs1)
                         # write.table(frequenciesTables_results$region_with_specific_length,"fre.txt",sep="\t")
+                        print(str(motif_all))
+                        plot(motif_all, ic.scale = FALSE, ylab = "probability", xaxis = FALSE, yaxis = FALSE)
                         logo_plot <<- plot(motif_all, ic.scale = FALSE, ylab = "probability", xaxis = FALSE, yaxis = FALSE)
                     } else {
                         # Create custom colour scheme
