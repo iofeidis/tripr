@@ -186,7 +186,7 @@ app_server <- function(input, output, session) {
 
     # TODO: Where should user put its files so they are available for dataset?
     # dir
-    volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
+    volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), shinyFiles::getVolumes()())
     shinyDirChoose(input, "dir", roots = volumes, filetypes = c("", "txt"))
 
     dir <- reactive(input$dir)
