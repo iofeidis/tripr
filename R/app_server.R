@@ -184,14 +184,12 @@ app_server <- function(input, output, session) {
 
     ############################### Select Datasets ###############################
 
-    # TODO: Where should user put its files so they are available for dataset?
-    # dir
     volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), shinyFiles::getVolumes()())
     shinyDirChoose(input, "dir", roots = volumes, filetypes = c("", "txt"))
 
     dir <- reactive(input$dir)
     output$dir <- renderText({  # use renderText instead of renderPrint
-        parseDirPath(volumes, input$dir)
+        shinyFiles::parseDirPath(volumes, input$dir)
     })    
 
     # path
@@ -787,7 +785,7 @@ app_server <- function(input, output, session) {
         if (input$start_end == FALSE) {
             return()
         }
-        textInput("end_char", "End with:", value = "F", width = "110px")
+        textInput("end_char", "End with:", value = "W", width = "110px")
     })
 
     output$uiEnd_comment <- renderUI({
@@ -801,7 +799,7 @@ app_server <- function(input, output, session) {
         if (input$identity == FALSE) {
             return()
         }
-        numericInput("identityLow", "Identity Low %:", 95, min = 0, max = 100, width = "110px")
+        numericInput("identityLow", "Identity Low %:", 85, min = 0, max = 100, width = "110px")
     })
 
     output$uiIdentityHigh <- renderUI({

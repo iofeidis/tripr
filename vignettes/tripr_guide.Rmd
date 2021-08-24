@@ -78,7 +78,8 @@ bib <- c(
     gridExtra = citation("gridExtra")[1],
     dplyr = citation("dplyr")[1],
     pryr = citation("pryr")[1],
-    shinyBS = citation("shinyBS")[1]
+    shinyBS = citation("shinyBS")[1],
+    fs = citation("fs")[1]
 )
 ```
 
@@ -698,6 +699,7 @@ made possible thanks to:
 * `r CRANpkg('gridExtra')` `r Citep(bib[['gridExtra']])`
 * `r CRANpkg('dplyr')` `r Citep(bib[['dplyr']])`
 * `r CRANpkg('pryr')` `r Citep(bib[['pryr']])`
+* `r CRANpkg('fs')` `r Citep(bib[['fs']])`
 * `r Biocpkg('biocthis')` `r Citep(bib[['biocthis']])`
 
 # Citation

@@ -60,7 +60,7 @@ testColumnNames <- function(name, files, datapath) {
     e$all_used_columns <- all_used_columns
     e$used_columns <- used_columns
 
-    # save(used_columns,file=paste0(output_folder,"/used_columns.rData"))
+    # save(used_columns,file=paste0(e$output_folder,"/used_columns.rData"))
 
     # filter_column contains the columns that are used for each one of the 9 filters with ids=1:9
     filter_column <- c()
@@ -962,7 +962,7 @@ imgtfilter <- function(rawDataSet, name, allData, cell_id = 1, filter_id = c(5, 
         for (i in seq_len(length(name))) {
             filtered_datasets[[name[i]]] <- allData %>% dplyr::filter(allData$dataName == name[i])
             if (save_tables_individually_filter_in) {
-                write.table((filtered_datasets[[name[i]]]), paste0(output_folder, "/", "filter_in_", name[i], ".txt"), sep = "\t", row.names = FALSE, col.names = TRUE)
+                write.table((filtered_datasets[[name[i]]]), paste0(e$output_folder, "/", "filter_in_", name[i], ".txt"), sep = "\t", row.names = FALSE, col.names = TRUE)
             }
         }
     }
@@ -980,7 +980,7 @@ imgtfilter <- function(rawDataSet, name, allData, cell_id = 1, filter_id = c(5, 
     }
 
     if (save_tables_individually_filter_in) {
-        write.table((allData), paste0(output_folder, "/", "filter_in_All_Data", ".txt"), sep = "\t", row.names = FALSE, col.names = TRUE)
+        write.table((allData), paste0(e$output_folder, "/", "filter_in_All_Data", ".txt"), sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
     confirm <- paste0("Datasets filtered: ", a, ". Filters applied: ", b)
@@ -1813,7 +1813,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             }
 
             write.table(clono_write,
-                paste0(output_folder, "/", "Clonotypes_", paste0(g, "+", junction), "All_Data", ".txt"),
+                paste0(e$output_folder, "/", "Clonotypes_", paste0(g, "+", junction), "All_Data", ".txt"),
                 sep = "\t",
                 row.names = FALSE,
                 col.names = TRUE,
@@ -1821,7 +1821,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             )
 
             write.table(cbind(allData_initial, "cluster_id" = cluster_id, "freq_cluster_id" = freq_cluster_id),
-                paste0(output_folder, "/", "filterin_clono_All_Data", ".txt"),
+                paste0(e$output_folder, "/", "filterin_clono_All_Data", ".txt"),
                 sep = "\t",
                 row.names = FALSE,
                 col.names = TRUE,
@@ -1829,7 +1829,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             )
 
             # if(run_shm){
-            #   write.table(SHM_normal[["All Data"]], paste0(output_folder,"/","SHM_normal_clono_All_Data",".txt"),sep = "\t", row.names = FALSE, col.names = TRUE)
+            #   write.table(SHM_normal[["All Data"]], paste0(e$output_folder,"/","SHM_normal_clono_All_Data",".txt"),sep = "\t", row.names = FALSE, col.names = TRUE)
             # }
         }
     }
@@ -2014,7 +2014,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             # Printing clonotypes file
 
             write.table(clono_write,
-                paste0(output_folder, "/", "Clonotypes_", paste(g, "+", junction, "_", sep = ""), name[j], ".txt"),
+                paste0(e$output_folder, "/", "Clonotypes_", paste(g, "+", junction, "_", sep = ""), name[j], ".txt"),
                 sep = "\t",
                 row.names = FALSE,
                 col.names = TRUE,
@@ -2024,7 +2024,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             # Printing whole integrated clonotypes file
 
             write.table(clono_datasets_freq[[name[j]]],
-                paste0(output_folder, "/", "filterin_clono_", name[j], ".txt"),
+                paste0(e$output_folder, "/", "filterin_clono_", name[j], ".txt"),
                 sep = "\t",
                 row.names = FALSE,
                 col.names = TRUE,
@@ -2035,7 +2035,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
 
             # if(run_shm){
             #   write.table(SHM_normal,
-            #               paste0(output_folder, "/", "SHM_normal_clono_", name[j], ".txt"),
+            #               paste0(e$output_folder, "/", "SHM_normal_clono_", name[j], ".txt"),
             #               sep = "\t",
             #               row.names = FALSE,
             #               col.names = TRUE,
@@ -2046,7 +2046,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
 
             if (run_diagnosis) {
                 write.table(group.freq.seq[[name[j]]],
-                    paste0(output_folder, "/", "diagnosis_", name[j], ".txt"),
+                    paste0(e$output_folder, "/", "diagnosis_", name[j], ".txt"),
                     sep = "\t",
                     row.names = FALSE,
                     col.names = TRUE,
@@ -2116,16 +2116,16 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
                 colnames(clono_write) <- c("Genes", "CDR3", "N", "Freq", "Convergent Evolution")
             }
 
-            write.table(clono_write, paste0(output_folder, "/", "Clonotypes_All Data", ".txt"),
+            write.table(clono_write, paste0(e$output_folder, "/", "Clonotypes_All Data", ".txt"),
                 sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE
             )
 
-            write.table(clono_allData_freq, paste0(output_folder, "/", "filterin_clono_All_Data", ".txt"),
+            write.table(clono_allData_freq, paste0(e$output_folder, "/", "filterin_clono_All_Data", ".txt"),
                 sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE
             )
 
             # if(run_shm){
-            #   write.table(SHM_normal[["All Data"]], paste0(output_folder,"/","SHM_normal_clono_All_Data",".txt"),
+            #   write.table(SHM_normal[["All Data"]], paste0(e$output_folder,"/","SHM_normal_clono_All_Data",".txt"),
             #               sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
             # }
         }
@@ -2396,9 +2396,9 @@ highly_similar_clonotypes <- function(clono_allData, clono_datasets, num_of_mism
         row.names(highly_sim_clonotypes_allGroups[[paste0("length ", cdr3_lengths[i])]]) <- seq_len(nrow(highly_sim_clonotypes_allGroups[[paste0("length ", cdr3_lengths[i])]]))
 
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Highly_sim_Clonotypes_", "All_Data_length_", cdr3_lengths[i], ".txt")
+            filename <- paste0(e$output_folder, "/", "Highly_sim_Clonotypes_", "All_Data_length_", cdr3_lengths[i], ".txt")
             write.table(highly_sim_clonotypes[[paste0("length ", cdr3_lengths[i])]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
-            filename <- paste0(output_folder, "/", "Highly_sim_Clonotypes_groups_", "All_Data_length_", cdr3_lengths[i], ".txt")
+            filename <- paste0(e$output_folder, "/", "Highly_sim_Clonotypes_groups_", "All_Data_length_", cdr3_lengths[i], ".txt")
             write.table(highly_sim_clonotypes_allGroups[[paste0("length ", cdr3_lengths[i])]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
     }
@@ -2532,9 +2532,9 @@ highly_similar_clonotypes <- function(clono_allData, clono_datasets, num_of_mism
             }
 
             if (save_tables_individually) {
-                filename <- paste0(output_folder, "/", "Highly_sim_Clonotypes_", name[j], "_length_", cdr3_lengths[i], ".txt")
+                filename <- paste0(e$output_folder, "/", "Highly_sim_Clonotypes_", name[j], "_length_", cdr3_lengths[i], ".txt")
                 write.table(highly_sim_clonotypes_datasets[[name[j]]][[paste0("length ", cdr3_lengths[i])]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
-                filename <- paste0(output_folder, "/", "Highly_sim_Clonotypes_groups_", name[j], "_length_", cdr3_lengths[i], ".txt")
+                filename <- paste0(e$output_folder, "/", "Highly_sim_Clonotypes_groups_", name[j], "_length_", cdr3_lengths[i], ".txt")
                 write.table(highly_sim_clonotypes_allGroups_datasets[[name[j]]][[paste0("length ", cdr3_lengths[i])]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
             }
         }
@@ -2735,10 +2735,10 @@ public_clonotypes <- function(clono_allData, clono_datasets, take_gene, use_read
 
     if (save_tables_individually) {
         if (highly) {
-            filename <- paste0(output_folder, "/", "public_highly_clonotypes", ".txt")
+            filename <- paste0(e$output_folder, "/", "public_highly_clonotypes", ".txt")
             write.table(public_clono, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         } else {
-            filename <- paste0(output_folder, "/", "public_clonotypes", ".txt")
+            filename <- paste0(e$output_folder, "/", "public_clonotypes", ".txt")
             write.table(public_clono, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
     }
@@ -2845,7 +2845,7 @@ repertoires <- function(clono_allData, clono_datasets, allele, allele_clonotypes
             colnames(Repertoires_datasets[[name[j]]]) <- c("Gene", "N", "Freq")
 
             if (save_tables_individually) {
-                filename <- paste0(output_folder, "/", "Repertoires_", g, "_", name[j], ".txt")
+                filename <- paste0(e$output_folder, "/", "Repertoires_", g, "_", name[j], ".txt")
                 write.table(Repertoires_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
             }
             return(Repertoires_datasets[[name[j]]])
@@ -2923,7 +2923,7 @@ repertoires <- function(clono_allData, clono_datasets, allele, allele_clonotypes
             colnames(freq_gene_name_datasets[[name[j]]]) <- c("Gene", "N", "Freq")
 
             if (save_tables_individually) {
-                filename <- paste0(output_folder, "/", "Repertoires_", g, "_", name[j], ".txt")
+                filename <- paste0(e$output_folder, "/", "Repertoires_", g, "_", name[j], ".txt")
                 write.table(freq_gene_name_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
             }
             return(freq_gene_name_datasets[[name[j]]])
@@ -2946,7 +2946,7 @@ repertoires <- function(clono_allData, clono_datasets, allele, allele_clonotypes
     colnames(Repertoires_allData) <- c("Gene", "N", "Freq")
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Repertoires_", g, "_", "All_Data", ".txt")
+        filename <- paste0(e$output_folder, "/", "Repertoires_", g, "_", "All_Data", ".txt")
         write.table(Repertoires_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
@@ -3021,7 +3021,7 @@ repertoires_highly_similar <- function(clono_allData, clono_datasets, allele, al
             colnames(Repertoires_datasets[[name[j]]]) <- c("Gene", "N", "Freq")
 
             if (save_tables_individually) {
-                filename <- paste0(output_folder, "/", "Repertoires_HighlySim_", g, "_", name[j], ".txt")
+                filename <- paste0(e$output_folder, "/", "Repertoires_HighlySim_", g, "_", name[j], ".txt")
                 write.table(Repertoires_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
             }
             return(Repertoires_datasets[[name[j]]])
@@ -3105,7 +3105,7 @@ repertoires_highly_similar <- function(clono_allData, clono_datasets, allele, al
                 colnames(freq_gene_name_datasets[[name[j]]]) <- c("Gene", "N", "Freq")
 
                 if (save_tables_individually) {
-                    filename <- paste0(output_folder, "/", "Repertoires_HiglySim_", g, "_", name[j], ".txt")
+                    filename <- paste0(e$output_folder, "/", "Repertoires_HiglySim_", g, "_", name[j], ".txt")
                     write.table(freq_gene_name_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
                 }
             }
@@ -3129,7 +3129,7 @@ repertoires_highly_similar <- function(clono_allData, clono_datasets, allele, al
     colnames(Repertoires_allData) <- c("Gene", "N", "Freq")
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Repertoires_HighlySim_", g, "_", "All_Data", ".txt")
+        filename <- paste0(e$output_folder, "/", "Repertoires_HighlySim_", g, "_", "All_Data", ".txt")
         write.table(Repertoires_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
@@ -3185,10 +3185,10 @@ repertoires_comparison <- function(Repertoires_allData, Repertoires_datasets, na
 
     if (save_tables_individually) {
         if (highly_sim) {
-            filename <- paste0(output_folder, "/", "highlySim_repertoires_comparison_table_", id, ".txt")
+            filename <- paste0(e$output_folder, "/", "highlySim_repertoires_comparison_table_", id, ".txt")
             write.table(unique_repertoires, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         } else {
-            filename <- paste0(output_folder, "/", "repertoires_comparison_table_", id, ".txt")
+            filename <- paste0(e$output_folder, "/", "repertoires_comparison_table_", id, ".txt")
             write.table(unique_repertoires, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
     }
@@ -3436,7 +3436,7 @@ Multiple_value_comparison <- function(clono_allData, clono_datasets, allele_clon
         Multiple_value_comparison_datasets[[name[j]]] <- data.frame(Multiple_value_comparison_datasets[[name[j]]], stringsAsFactors = FALSE)
 
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Multiple_value_comparison_", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", name[j], ".txt")
+            filename <- paste0(e$output_folder, "/", "Multiple_value_comparison_", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", name[j], ".txt")
             write.table(Multiple_value_comparison_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
 
@@ -3454,7 +3454,7 @@ Multiple_value_comparison <- function(clono_allData, clono_datasets, allele_clon
     names(Multiple_value_comparison_datasets) <- name
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Multiple_value_comparison_", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", "All_Data", ".txt")
+        filename <- paste0(e$output_folder, "/", "Multiple_value_comparison_", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", "All_Data", ".txt")
         write.table(Multiple_value_comparison_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
@@ -3732,7 +3732,7 @@ Multiple_value_comparison_highly_similar <- function(clono_allData, clono_datase
         Multiple_value_comparison_datasets[[name[j]]] <- data.frame(Multiple_value_comparison_datasets[[name[j]]], stringsAsFactors = FALSE)
 
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Multiple_value_comparison_highly_similar", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", name[j], ".txt")
+            filename <- paste0(e$output_folder, "/", "Multiple_value_comparison_highly_similar", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", name[j], ".txt")
             write.table(Multiple_value_comparison_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
 
@@ -3750,7 +3750,7 @@ Multiple_value_comparison_highly_similar <- function(clono_allData, clono_datase
     names(Multiple_value_comparison_datasets) <- name
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Multiple_value_comparison_highly_similar", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", "All_Data", ".txt")
+        filename <- paste0(e$output_folder, "/", "Multiple_value_comparison_highly_similar", stringr::str_replace(val1_initial, "%", ""), "_", stringr::str_replace(val2_initial, "%", ""), "_", "All_Data", ".txt")
         write.table(Multiple_value_comparison_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
@@ -4537,7 +4537,7 @@ alignment <- function(input, region, germline, name, only_one_germline, use_gene
             alignment_datasets[[name[j]]] <- output %>% select(-c(Functionality))
 
             if (save_tables_individually) {
-                filename <- paste0(output_folder, "/", "Alignment_", AAorNtAlignment, "_", name[j], ".txt")
+                filename <- paste0(e$output_folder, "/", "Alignment_", AAorNtAlignment, "_", name[j], ".txt")
                 write.table(alignment_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
             }
 
@@ -4561,7 +4561,7 @@ alignment <- function(input, region, germline, name, only_one_germline, use_gene
         names(alignment_datasets) <- name
 
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
+            filename <- paste0(e$output_folder, "/", "Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
             write.table(alignment_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
 
@@ -4784,7 +4784,7 @@ mutations <- function(align, align_datasets, thr, AAorNtMutations, name, topNClo
 
         mutation_change_datasets[[name[j]]] <- output
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Mutations_thr", thr, "_", AAorNtMutations, "_", name[j], cl_id, ".txt")
+            filename <- paste0(e$output_folder, "/", "Mutations_thr", thr, "_", AAorNtMutations, "_", name[j], cl_id, ".txt")
             write.table(mutation_change_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
 
@@ -4800,7 +4800,7 @@ mutations <- function(align, align_datasets, thr, AAorNtMutations, name, topNClo
     names(mutation_change_datasets) <- name
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Mutations_thr", thr, "_", AAorNtMutations, "_", "All_Data", cl_id, ".txt")
+        filename <- paste0(e$output_folder, "/", "Mutations_thr", thr, "_", AAorNtMutations, "_", "All_Data", cl_id, ".txt")
         write.table(mutation_change_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
@@ -4841,11 +4841,11 @@ groupedAlignment <- function(alignment_allData, alignment_datasets, name, AAorNt
         distinct_changes <- input[, list(Freq = .N), by = XColumns]
         grouped_alignment_datasets[[name[j]]] <- cbind(N = distinct_changes$Freq, distinct_changes[, seq_len((ncol(distinct_changes) - 1))])
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
+            filename <- paste0(e$output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
             write.table(grouped_alignment_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
         if (save_tables_individually) {
-            filename <- paste0(output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", name[j], ".txt")
+            filename <- paste0(e$output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", name[j], ".txt")
             write.table(grouped_alignment_datasets[[name[j]]], filename, sep = "\t", row.names = FALSE, col.names = TRUE)
         }
         return(grouped_alignment_datasets[[name[j]]])
@@ -4860,7 +4860,7 @@ groupedAlignment <- function(alignment_allData, alignment_datasets, name, AAorNt
     names(grouped_alignment_datasets) <- name
 
     if (save_tables_individually) {
-        filename <- paste0(output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
+        filename <- paste0(e$output_folder, "/", "Grouped Alignment_", AAorNtAlignment, "_", "All_Data", ".txt")
         write.table(grouped_alignment_allData, filename, sep = "\t", row.names = FALSE, col.names = TRUE)
     }
 
