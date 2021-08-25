@@ -7,20 +7,27 @@
 #' Output of analysis is saved in \emph{tripr/extdata/output} folder, where R 
 #' libraries are saved (typically \emph{R/library}).
 #'
-#' @param datapath The directory where the folders of the data 
-#' are located. Note that every sample of the dataset must have \strong{its 
+#' @param datapath (character) The directory where the folders of the data 
+#' is located. Note that every sample of the dataset must have \strong{its 
 #' own individual folder} and every sample folder must 
-#' be in \strong{one root folder}. \cr
+#' be in \strong{one root folder}. Note that \strong{every} file in the root 
+#' folder will be used in the analysis. \cr
 #' Supposedly the dataset is in user's \emph{Documents/} folder, one could use: 
-#' \code{fs::path_home("Documents", "dataset")}, with the help of \link[fs]{path} function.
+#' \code{fs::path_home("Documents", "dataset")}, with the help of 
+#' \link[fs]{path_home} function.
 #' See the package vignette for more.
 #'
-#' @param filelist The character vector of files of the IMGT output that will be 
-#' used through the analysis.
-#' @param cell 'Bcell' (default) or 'Tcell'.
-#' @param throughput 'High Throughput' (default) or 
+#' @param output_path (character) The directory where the output data will 
+#' be stored. Please provide a valid path, ideally the same way as datapath
+#' by using the \link[fs]{path_home} function. \cr
+#' The default value points to \emph{Documents/tripr_output} directory.
+#'
+#' @param filelist (character vector) The character vector of files of the IMGT 
+#' output that will be used through the analysis from each sample.
+#' @param cell (character) 'Bcell' (default) or 'Tcell'.
+#' @param throughput (character) 'High Throughput' (default) or 
 #' 'Low Throughput'.
-#' @param preselection Preselection options: \cr
+#' @param preselection (character) Preselection options: \cr
 #'    1 == Only take into account Functional V-Gene, \cr
 #'    2 == Only take into account CDR3 with no Special Characters (X,*,#,.), \cr
 #'    3 == Only take into account Productive Sequences, \cr
@@ -30,7 +37,7 @@
 #'    Use comma ',' to seperate the list of options, use semicolon ':' to 
 #'    seperate start and end landmarks.
 #'
-#' @param selection Selection options: \cr
+#' @param selection (character) Selection options: \cr
 #'    5 == V-REGION identity % , \cr
 #'    6 == Select Specific V Gene , \cr
 #'    7 == Select Specific J Gene , \cr
@@ -38,20 +45,21 @@
 #'    9 == Select CDR3 length range ,\cr
 #'    10 == Only select CDR3 containing specific amino-acid sequence. \cr
 #'    Use comma ',' to seperate the list of options.
-#' @param identity_range V-REGION identity %Low and %High, \cr
+#' @param identity_range (character) V-REGION identity %Low and %High, \cr
 #'    Use colon ':' to seperate identity low and high
-#' @param vgenes Filter in specific V Genes, \cr
+#' @param vgenes (character) Filter in specific V Genes, \cr
 #' Separate the different V-Gene names with '|' e.g. TRBV11-2|TRBV29-1*03 (F)
-#' @param dgenes Filter in specific D Genes, \cr
+#' @param dgenes (character) Filter in specific D Genes, \cr
 #'     Separate the different D-Gene names with | e.g. TRBD2|TRBD1
-#' @param jgenes Filter in specific J Genes, \cr
+#' @param jgenes (character) Filter in specific J Genes, \cr
 #'     Separate the different J-Gene names with | e.g. TRBJ2-6|TRBJ2-2
-#' @param cdr3_length_range Filter in rows with CDR3 lengths within a range, \cr
+#' @param cdr3_length_range (character) Filter in rows with CDR3 lengths 
+#' within a range, \cr
 #'    Use colon ':' to seperate identity low and high
-#' @param aminoacid Filter in rows with CDR3 containing specific 
+#' @param aminoacid (character) Filter in rows with CDR3 containing specific 
 #' amino-acid sequence
-#' @param pipeline Pipeline options: \cr
-#'     1 == Clonotypes Computation, \cr
+#' @param pipeline (character) Pipeline options: \cr
+#'    1 == Clonotypes Computation, \cr
 #'    2 == Highly Similar Clonotypes computation, \cr
 #'    3 == Shared Clonotypes Computation, \cr
 #'    4 == Highly Similar Shared Clonotypes Computation, \cr
@@ -71,7 +79,7 @@
 #'    18 == SHM High similarity, \cr
 #'    19 == Diagnosis, \cr
 #'    Use comma ',' to seperate the list of options
-#' @param select_clonotype Compute clonotypes. \cr
+#' @param select_clonotype (character) Compute clonotypes. \cr
 #' Select one the following options: \cr
 #'    "V Gene + CDR3 Amino Acids", \cr
 #'    "V Gene and Allele + CDR3 Amino Acids", \cr
@@ -84,24 +92,25 @@
 #'    "CDR3 Amino Acids", \cr
 #'    "CDR3 Nucleotide", \cr
 #'    "Sequence
-#' @param highly_sim_params Select number of missmatches, the threshold of 
+#' @param highly_sim_params (character) Select number of missmatches, the 
+#' threshold of 
 #' the clonotype frequency and whether you want to take gene into account.
 #' Use dashes '-' to show the length of the CDR3 sequences and the number 
 #' of allowed missmatches and spaces ' ' to separate. For the CDR3 lengths 
 #' with not specified number of missmatches the default value is 1.
 #' Use comma ',' to separate the three options.
-#' @param shared_clonotypes_params Shared clonotypes computation. \cr
+#' @param shared_clonotypes_params (character) Shared clonotypes computation.\cr
 #'    Select 'reads' of 'threshold' for clonotypes, the number of reads or 
 #'    the threshold percentage accordingly, and whether you want to take 
 #'    gene into account.
 #'    Use comma ',' to seperate the 3 options
-#' @param highly_shared_clonotypes_params Highly Similar Shared Clonotypes 
-#' Computation \cr
+#' @param highly_shared_clonotypes_params (character) Highly Similar Shared 
+#' Clonotypes Computation \cr
 #'  Select 'reads' of 'threshold' for clonotypes, the number of 
 #'  reads or the threshold percentage accordingly, and whether you want 
 #'  to take gene into account.
 #'  Use comma ',' to seperate the 3 options
-#' @param repertoires_params Repertoires Extraction \cr
+#' @param repertoires_params (character) Repertoires Extraction \cr
 #'    Options: \cr
 #'    1 == V Gene \cr
 #'    2 == V Gene and allele \cr
@@ -110,11 +119,11 @@
 #'    5 == D Gene \cr
 #'    6 == D Gene and allele \cr
 #'    Use comma ',' to seperate the selected options
-#' @param identity_groups Insert identity groups \cr
+#' @param identity_groups (character) Insert identity groups \cr
 #'    Insert low and high values as follows: \cr
 #'    low_values:high_values \cr
 #'    Seperate low_values and high_values using comma ','.
-#' @param multiple_values_params Multiple value comparison \cr
+#' @param multiple_values_params (character) Multiple value comparison \cr
 #'    Options: \cr
 #'    1 == V GENE   \cr
 #'    2 == V GENE and allele \cr
@@ -129,7 +138,7 @@
 #'    11 == V-REGION identity %  \cr
 #'    Use colon ':' to indicate combinations of 2 values, use comma "," to 
 #' seperate the selected options
-#' @param alignment_params Alignment parameters: \cr
+#' @param alignment_params (character) Alignment parameters: \cr
 #'    Region for Alignment: 1 == V.D.J.REGION or 2 == V.J.REGION  \cr
 #'    AA or Nt: Select 'aa' or 'nt' or 'both' \cr
 #'    Germline: 1 == Use Allele's germline or 2 == Use Gene's germline \cr
@@ -138,7 +147,7 @@
 #'    Use comma ',' to seperate the 4 parameters.
 #'    If you select option 2 or 3 at the 4th parameter you have to set 
 #'    the N or the threshold as well using colon ':'.
-#' @param mutations_params Somatic hypermutations parameters: \cr
+#' @param mutations_params (character) Somatic hypermutations parameters: \cr
 #'    AA or Nt: Select 'aa' or 'nt' or 'both'  \cr
 #'    Set threshold for AA \cr
 #'    Set threshold for Nt \cr
@@ -155,8 +164,9 @@
 #'
 #'## Do not run
 #'
-#'run_TRIP (
-#'    datapath=fs::path_home("Documents", "dataset"), 
+#'run_TRIP(
+#'    datapath=fs::path_home("Documents", "dataset"),
+#'    output_path=fs::path_home("Documents/my_output"),
 #'    filelist=c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt", 
 #'        "4_IMGT-gapped-AA-sequences.txt", "6_Junction.txt"),
 #'    cell="Bcell", 
@@ -175,7 +185,8 @@
 
 
 run_TRIP <- function(
-    datapath=fs::path_package("extdata", "dataset", package="tripr"), 
+    datapath=fs::path_package("extdata", "dataset", package="tripr"),
+    output_path=fs::path_home("Documents/tripr_output"), 
     filelist=c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt", 
         "4_IMGT-gapped-AA-sequences.txt", "6_Junction.txt"),
     cell="Bcell", 
@@ -204,9 +215,12 @@ run_TRIP <- function(
 
     ##### Create output folder ######
     if (save_tables_individually | save_lists_for_bookmark) {
-        # output folder
-        e$output_folder <- paste0(fs::path_package("extdata", package="tripr"), 
-            "/output/output_tables_", trunc(as.numeric(Sys.time())))
+        ## output folder name as system time
+        output_path <- paste0(output_path, 
+            "/output_", format(Sys.time(), "%H_%M"))
+        message("Output will be saved in: ", fs::path(output_path))
+        # output path
+        e$output_folder <- paste0(fs::path(output_path), "/output_tables")
         if (!file.exists(paste0(e$output_folder))) {
             fs::dir_create(paste0(e$output_folder))
         }
@@ -216,7 +230,7 @@ run_TRIP <- function(
     name <- list.files(datapath) # dataset names eg c("B1","B2")
     allDatasets <- name
     loaded_datasets <- list.files(datapath) # dataset names eg c("B1","B2")
-    files <- filelist # selected imgt files eg c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt", "4_IMGT-gapped-AA-sequences.txt","6_Junction.txt" )
+    files <- filelist # selected imgt files 
 
     if (cell == "Bcell") {
         cell_id <- 2
@@ -1245,13 +1259,12 @@ run_TRIP <- function(
     clonotypes_barchart_down_threshold <- 0.1
     clonotypes_barchart_up_threshold <- 1
 
-    folder_name <- paste("/Analysis", trunc(as.numeric(Sys.time())), sep = "_")
-    if (!file.exists(paste0(fs::path_package("extdata", "output", package="tripr"), folder_name))) { # check if the directory has been made yet, I use the time/date at which the action button was pressed to make it relatively unique
-        fs::dir_create(paste0(fs::path_package("extdata", "output", package="tripr"), folder_name)) # make the dir if not
+    folder_name <- "/Analysis"
+    if (!file.exists(paste0(fs::path(output_path), folder_name))) { # check if the directory has been made yet, I use the time/date at which the action button was pressed to make it relatively unique
+        fs::dir_create(paste0(fs::path(output_path), folder_name)) # make the dir if not
         # file.path(paste0(tmp_path, "/inst/extdata/output/", folder_name)) # make the dir if not
     }
-    print(paste0("Output saved in: ", paste0(fs::path_package("extdata", "output", package="tripr"), folder_name)))
-    in.path <- paste0(fs::path_package("extdata", "output", package="tripr"), folder_name) # go into the dir, alternatively you could just set the path of the file each time
+    in.path <- paste0(fs::path(output_path), folder_name) # go into the dir, alternatively you could just set the path of the file each time
 
     # check if the following have run
 

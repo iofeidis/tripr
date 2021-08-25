@@ -1676,7 +1676,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
     used_columns <- e$used_columns
     # logfile
 
-    print("Clonotype Analysis Step 1")
+    message("Clonotype Analysis Step 1")
 
     if (allele == FALSE) {
         g <- stringr::str_replace(gene, ".and.allele", "")
@@ -1705,7 +1705,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
 
     if (length(name) > 1) {
         if (length(gene) > 0) {
-            print("Clonotype Analysis Step 2.a")
+            message("Clonotype Analysis Step 2.a")
 
             if (allele == FALSE) {
                 # a2 = strsplit(allData[[gene]],"[*]")
@@ -1749,7 +1749,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
                 cluster_id[inputVGenes_CDR3] <- i
             }
         } else {
-            print("Clonotype Analysis Step 2.b")
+            message("Clonotype Analysis Step 2.b")
 
             distinctVGenes_CDR3 <- allData %>%
                 dplyr::group_by(clonotype = allData[[junction]]) %>%
@@ -1852,10 +1852,10 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
 
     group.freq.seq <- list()
 
-    print("Clonotype Analysis Step 3")
+    message("Clonotype Analysis Step 3")
 
     one_run <- function(j) {
-        print("Clonotype Analysis Step 5")
+        message("Clonotype Analysis Step 5")
 
         data <- allData %>% dplyr::filter(allData$dataName == name[j])
         data_initial <- allData_initial %>% dplyr::filter(allData$dataName == name[j])
@@ -2069,7 +2069,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
     }
 
     if (Sys.info()[1] == "Windows") {
-        print("Clonotype Analysis Step 4")
+        message("Clonotype Analysis Step 4.a")
 
         # cl <- makeCluster(num_of_cores)
         # clono_datasets=clusterApply(cl=cl,seq_len(length(name)),one_run)
@@ -2084,7 +2084,7 @@ clonotypes <- function(allData, allele, gene, junction, name, run_diagnosis) { #
             diagnosis[[name[i]]] <- a[[i]]$Diagnosis
         }
     } else {
-        print("C7")
+        message("Clonotype Analysis Step 4.b")
 
         a <- parallel::mclapply(seq_len(length(name)), one_run, mc.cores = parallel::detectCores(all.tests = FALSE, logical = TRUE), mc.preschedule = TRUE)
         # a = lapply(seq_len(length(name)), one_run) ## for debugging use lapply
@@ -3872,7 +3872,7 @@ createFrequencyTableCDR3 <- function(region_name, input, name, regionLength, Fto
     } else {
         table_freq <- c()
         table_count <- c()
-        print("no data for this")
+        warning("No data for this")
     }
 
     ###################################### Separate datasets #######################################

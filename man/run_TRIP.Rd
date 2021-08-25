@@ -6,6 +6,7 @@
 \usage{
 run_TRIP(
   datapath = fs::path_package("extdata", "dataset", package = "tripr"),
+  output_path = fs::path_home("Documents/tripr_output"),
   filelist = c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt",
     "4_IMGT-gapped-AA-sequences.txt", "6_Junction.txt"),
   cell = "Bcell",
@@ -34,23 +35,30 @@ run_TRIP(
 )
 }
 \arguments{
-\item{datapath}{The directory where the folders of the data 
-are located. Note that every sample of the dataset must have \strong{its 
+\item{datapath}{(character) The directory where the folders of the data 
+is located. Note that every sample of the dataset must have \strong{its 
 own individual folder} and every sample folder must 
-be in \strong{one root folder}. \cr
+be in \strong{one root folder}. Note that \strong{every} file in the root 
+folder will be used in the analysis. \cr
 Supposedly the dataset is in user's \emph{Documents/} folder, one could use: 
-\code{fs::path_home("Documents", "dataset")}, with the help of \link[fs]{path} function.
+\code{fs::path_home("Documents", "dataset")}, with the help of 
+\link[fs]{path_home} function.
 See the package vignette for more.}
 
-\item{filelist}{The character vector of files of the IMGT output that will be 
-used through the analysis.}
+\item{output_path}{(character) The directory where the output data will 
+be stored. Please provide a valid path, ideally the same way as datapath
+by using the \link[fs]{path_home} function. \cr
+The default value points to \emph{Documents/tripr_output} directory.}
 
-\item{cell}{'Bcell' (default) or 'Tcell'.}
+\item{filelist}{(character vector) The character vector of files of the IMGT 
+output that will be used through the analysis from each sample.}
 
-\item{throughput}{'High Throughput' (default) or 
+\item{cell}{(character) 'Bcell' (default) or 'Tcell'.}
+
+\item{throughput}{(character) 'High Throughput' (default) or 
 'Low Throughput'.}
 
-\item{preselection}{Preselection options: \cr
+\item{preselection}{(character) Preselection options: \cr
 1 == Only take into account Functional V-Gene, \cr
 2 == Only take into account CDR3 with no Special Characters (X,*,#,.), \cr
 3 == Only take into account Productive Sequences, \cr
@@ -60,7 +68,7 @@ Use the vertical line '|' to add more than one start or end landmarks,\cr
 Use comma ',' to seperate the list of options, use semicolon ':' to 
 seperate start and end landmarks.}
 
-\item{selection}{Selection options: \cr
+\item{selection}{(character) Selection options: \cr
 5 == V-REGION identity % , \cr
 6 == Select Specific V Gene , \cr
 7 == Select Specific J Gene , \cr
@@ -69,26 +77,27 @@ seperate start and end landmarks.}
 10 == Only select CDR3 containing specific amino-acid sequence. \cr
 Use comma ',' to seperate the list of options.}
 
-\item{identity_range}{V-REGION identity %Low and %High, \cr
+\item{identity_range}{(character) V-REGION identity %Low and %High, \cr
 Use colon ':' to seperate identity low and high}
 
-\item{vgenes}{Filter in specific V Genes, \cr
+\item{vgenes}{(character) Filter in specific V Genes, \cr
 Separate the different V-Gene names with '|' e.g. TRBV11-2|TRBV29-1*03 (F)}
 
-\item{dgenes}{Filter in specific D Genes, \cr
+\item{dgenes}{(character) Filter in specific D Genes, \cr
 Separate the different D-Gene names with | e.g. TRBD2|TRBD1}
 
-\item{jgenes}{Filter in specific J Genes, \cr
+\item{jgenes}{(character) Filter in specific J Genes, \cr
 Separate the different J-Gene names with | e.g. TRBJ2-6|TRBJ2-2}
 
-\item{cdr3_length_range}{Filter in rows with CDR3 lengths within a range, \cr
-Use colon ':' to seperate identity low and high}
+\item{cdr3_length_range}{(character) Filter in rows with CDR3 lengths 
+within a range, \cr
+   Use colon ':' to seperate identity low and high}
 
-\item{aminoacid}{Filter in rows with CDR3 containing specific 
+\item{aminoacid}{(character) Filter in rows with CDR3 containing specific 
 amino-acid sequence}
 
-\item{pipeline}{Pipeline options: \cr
- 1 == Clonotypes Computation, \cr
+\item{pipeline}{(character) Pipeline options: \cr
+1 == Clonotypes Computation, \cr
 2 == Highly Similar Clonotypes computation, \cr
 3 == Shared Clonotypes Computation, \cr
 4 == Highly Similar Shared Clonotypes Computation, \cr
@@ -109,7 +118,7 @@ amino-acid sequence}
 19 == Diagnosis, \cr
 Use comma ',' to seperate the list of options}
 
-\item{select_clonotype}{Compute clonotypes. \cr
+\item{select_clonotype}{(character) Compute clonotypes. \cr
 Select one the following options: \cr
    "V Gene + CDR3 Amino Acids", \cr
    "V Gene and Allele + CDR3 Amino Acids", \cr
@@ -123,27 +132,28 @@ Select one the following options: \cr
    "CDR3 Nucleotide", \cr
    "Sequence}
 
-\item{highly_sim_params}{Select number of missmatches, the threshold of 
+\item{highly_sim_params}{(character) Select number of missmatches, the 
+threshold of 
 the clonotype frequency and whether you want to take gene into account.
 Use dashes '-' to show the length of the CDR3 sequences and the number 
 of allowed missmatches and spaces ' ' to separate. For the CDR3 lengths 
 with not specified number of missmatches the default value is 1.
 Use comma ',' to separate the three options.}
 
-\item{shared_clonotypes_params}{Shared clonotypes computation. \cr
+\item{shared_clonotypes_params}{(character) Shared clonotypes computation.\cr
 Select 'reads' of 'threshold' for clonotypes, the number of reads or 
 the threshold percentage accordingly, and whether you want to take 
 gene into account.
 Use comma ',' to seperate the 3 options}
 
-\item{highly_shared_clonotypes_params}{Highly Similar Shared Clonotypes 
-Computation \cr
+\item{highly_shared_clonotypes_params}{(character) Highly Similar Shared 
+Clonotypes Computation \cr
  Select 'reads' of 'threshold' for clonotypes, the number of 
  reads or the threshold percentage accordingly, and whether you want 
  to take gene into account.
  Use comma ',' to seperate the 3 options}
 
-\item{repertoires_params}{Repertoires Extraction \cr
+\item{repertoires_params}{(character) Repertoires Extraction \cr
 Options: \cr
 1 == V Gene \cr
 2 == V Gene and allele \cr
@@ -153,12 +163,12 @@ Options: \cr
 6 == D Gene and allele \cr
 Use comma ',' to seperate the selected options}
 
-\item{identity_groups}{Insert identity groups \cr
+\item{identity_groups}{(character) Insert identity groups \cr
 Insert low and high values as follows: \cr
 low_values:high_values \cr
 Seperate low_values and high_values using comma ','.}
 
-\item{multiple_values_params}{Multiple value comparison \cr
+\item{multiple_values_params}{(character) Multiple value comparison \cr
    Options: \cr
    1 == V GENE   \cr
    2 == V GENE and allele \cr
@@ -174,7 +184,7 @@ Seperate low_values and high_values using comma ','.}
    Use colon ':' to indicate combinations of 2 values, use comma "," to 
 seperate the selected options}
 
-\item{alignment_params}{Alignment parameters: \cr
+\item{alignment_params}{(character) Alignment parameters: \cr
 Region for Alignment: 1 == V.D.J.REGION or 2 == V.J.REGION  \cr
 AA or Nt: Select 'aa' or 'nt' or 'both' \cr
 Germline: 1 == Use Allele's germline or 2 == Use Gene's germline \cr
@@ -184,7 +194,7 @@ Use comma ',' to seperate the 4 parameters.
 If you select option 2 or 3 at the 4th parameter you have to set 
 the N or the threshold as well using colon ':'.}
 
-\item{mutations_params}{Somatic hypermutations parameters: \cr
+\item{mutations_params}{(character) Somatic hypermutations parameters: \cr
 AA or Nt: Select 'aa' or 'nt' or 'both'  \cr
 Set threshold for AA \cr
 Set threshold for Nt \cr
@@ -208,8 +218,9 @@ libraries are saved (typically \emph{R/library}).
 
 ## Do not run
 
-run_TRIP (
-   datapath=fs::path_home("Documents", "dataset"), 
+run_TRIP(
+   datapath=fs::path_home("Documents", "dataset"),
+   output_path=fs::path_home("Documents/my_output"),
    filelist=c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt", 
        "4_IMGT-gapped-AA-sequences.txt", "6_Junction.txt"),
    cell="Bcell", 

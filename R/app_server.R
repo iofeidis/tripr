@@ -301,7 +301,7 @@ app_server <- function(input, output, session) {
                 file_size <<- file_size + file.size(paste0(path(), "/", input$Dataset[i], "/", input$inputFiles[j]))
             }
         }
-        print(paste0(file_size / 1000000, "MB to be loaded"))
+        message(file_size / 1000000, "MB to be loaded")
     })
 
     observeEvent(input$select_load_or_compute_clonotypes, {
@@ -3868,7 +3868,7 @@ app_server <- function(input, output, session) {
                 # if (input$regionAlignment=="V.D.J.REGION" || input$regionAlignment=="V.J.REGION"){
                 if (length(highly_sim) == 0) {
                     if (input$AAorNtAlignment == "both") {
-                        print("V1")
+                        message("Alignment Step 1.a")
                         alignmentRegion_results <<- alignment(
                             imgtfilter_results$allData,
                             input$regionAlignment,
@@ -3885,7 +3885,7 @@ app_server <- function(input, output, session) {
                             FtopN, input$thrClonoAlignment, Fthr, FALSE
                         )
 
-                        print("V2")
+                        message("Alignment Step 2.a")
                         alignmentRegion_results_nt <<- alignment(
                             imgtfilter_results$allData,
                             input$regionAlignment,
@@ -3921,7 +3921,7 @@ app_server <- function(input, output, session) {
                     }
                 } else {
                     if (input$AAorNtAlignment == "both") {
-                        print("V3")
+                        message("Alignment Step 1.b")
                         alignmentRegion_results <<- alignment(
                             imgtfilter_results$allData,
                             input$regionAlignment,
@@ -3938,7 +3938,7 @@ app_server <- function(input, output, session) {
                             FtopN, input$thrClonoAlignment, Fthr, TRUE
                         )
 
-                        print("V4")
+                        message("Alignment Step 2.b")
                         alignmentRegion_results_nt <<- alignment(
                             imgtfilter_results$allData,
                             input$regionAlignment,
