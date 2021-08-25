@@ -491,15 +491,12 @@ run_TRIP <- function(
         select_highly_sim_num_of_missmatches <- "select_highly_sim_num_of_missmatches_number"
         num_of_missmatches <- rep(1, length(cdr3_lengths))
 
-        # if (select_highly_sim_num_of_missmatches != 'select_highly_sim_num_of_missmatches_number'){
         for (i in seq_len(length(cdr3_lengths))) {
             if (cdr3_lengths[i] %in% missmatches_user2[, 1]) {
                 id_length <- which(missmatches_user2[, 1] == cdr3_lengths[i])
                 num_of_missmatches[i] <- missmatches_user2[id_length, 2]
             }
-            # num_of_missmatches <- c(num_of_missmatches,round(cdr3_lengths[i]*num_of_missmatches[i]/100,0))
         }
-        # }
 
         highly_similar_clonotypes_results <- highly_similar_clonotypes(
             clono$clono_allData,
@@ -542,8 +539,6 @@ run_TRIP <- function(
                     all_filter$highly_cluster_id[which(all_filter$cluster_id %in% prev)] <- h
                     all_filter$highly_freq_cluster_id[which(all_filter$cluster_id %in% prev)] <- temp$Freq
                 }
-
-                # filtered_High_SHM_similarity[[d]] = SHM_high_similarity(all_filter)
             }
 
             if (save_tables_individually) {
@@ -585,7 +580,6 @@ run_TRIP <- function(
                 all_filter$highly_freq_cluster_id[which(all_filter$cluster_id %in% prev)] <- temp$Freq
             }
 
-            # filtered_High_SHM_similarity[["All Data"]] = SHM_high_similarity(all_filter)
         }
 
         if (save_tables_individually) {
@@ -968,9 +962,6 @@ run_TRIP <- function(
             Multiple_value_comparison_input_values[2, i] <- options[as.numeric(strsplit(values[i], ":")[[1]][2])]
         }
 
-        # Multiple_value_comparison_input_values[1,] = c("V GENE", "J GENE")
-        # Multiple_value_comparison_input_values[2,] = c("J GENE", "CDR3-IMGT length")
-
         for (i in seq_len(ncol(Multiple_value_comparison_input_values))) {
             val1 <- Multiple_value_comparison_input_values[1, i]
             val2 <- Multiple_value_comparison_input_values[2, i]
@@ -1136,7 +1127,6 @@ run_TRIP <- function(
             }
         }
 
-        # if (length(highly_sim)==0){
         if (AAorNtAlignment == "both") {
             alignmentRegion_results <- alignment(
                 imgtfilter_results$allData, regionAlignment, Germline, loaded_datasets, only_one_germline,
@@ -1158,20 +1148,6 @@ run_TRIP <- function(
                 topNClonoAlignment, FtopN, thrClonoAlignment, Fthr, FALSE
             )
         }
-        # }else{
-        #  if (AAorNtAlignment=="both"){
-        #    alignmentRegion_results <- alignment(imgtfilter_results$allData,regionAlignment,Germline,loaded_datasets,only_one_germline,
-        #                                         use_genes_germline,Tcell==TRUE,"aa",highly_sim,highly_sim_datasets,clono$view_specific_clonotype_allData,
-        #                                         clono$view_specific_clonotype_datasets,topNClonoAlignment,FtopN,thrClonoAlignment,Fthr,TRUE)
-        #    alignmentRegion_results_nt <- alignment(imgtfilter_results$allData,regionAlignment,Germline,loaded_datasets,only_one_germline,
-        #                                            use_genes_germline,Tcell==TRUE,"nt",highly_sim,highly_sim_datasets,clono$view_specific_clonotype_allData,
-        #                                            clono$view_specific_clonotype_datasets,topNClonoAlignment,FtopN,thrClonoAlignment,Fthr,TRUE)
-        #  }else{
-        #    alignmentRegion_results <- alignment(imgtfilter_results$allData,regionAlignment,Germline,loaded_datasets,only_one_germline,use_genes_germline,
-        #                                         Tcell==TRUE,AAorNtAlignment,highly_sim,highly_sim_datasets,clono$view_specific_clonotype_allData,
-        #                                         clono$view_specific_clonotype_datasets,topNClonoAlignment,FtopN,thrClonoAlignment,Fthr,TRUE)
-        #  }
-        # }
 
         ####### Grouped alignment ########
         if (AAorNtAlignment == "both") n <- "aa" else n <- "nt"
@@ -1262,7 +1238,6 @@ run_TRIP <- function(
     folder_name <- "/Analysis"
     if (!file.exists(paste0(fs::path(output_path), folder_name))) { # check if the directory has been made yet, I use the time/date at which the action button was pressed to make it relatively unique
         fs::dir_create(paste0(fs::path(output_path), folder_name)) # make the dir if not
-        # file.path(paste0(tmp_path, "/inst/extdata/output/", folder_name)) # make the dir if not
     }
     in.path <- paste0(fs::path(output_path), folder_name) # go into the dir, alternatively you could just set the path of the file each time
 
@@ -1336,8 +1311,6 @@ run_TRIP <- function(
                 bty = "n"
             )
         )
-        # barplot(freq_mat, col=rainbow(nrow(freq_mat)),names.arg=c("All Data",loaded_datasets), width=2)
-        # legend("topright", fill=rainbow(nrow(freq_mat)), legend=cl,cex = 0.6)
         dev.off()
     }
 
@@ -1416,8 +1389,6 @@ run_TRIP <- function(
                 bty = "n"
             )
         )
-        # barplot(freq_mat, col=rainbow(nrow(freq_mat)),names.arg=c("All Data",loaded_datasets), width=2)
-        # legend("topright", fill=rainbow(nrow(freq_mat)), legend=cl,cex = 0.6)
         dev.off()
     }
 
@@ -2011,7 +1982,6 @@ run_TRIP <- function(
         allData <- list()
         input_datasets <- ""
         for (i in seq_len(length(fileNames))) {
-            # clono$convergent_evolution_list_allData[seq_len(nucleotides_per_clonotype_topN),]
             nucleotides[, i] <- clono$convergent_evolution_list_datasets_only_num[[loaded_datasets[i]]][seq_len(nucleotides_per_clonotype_topN)]
             input_datasets <- paste(input_datasets, fileNames[i], sep = "_")
         }

@@ -57,12 +57,3 @@ use_only_useful_columns <- TRUE # libraries.R TRUE
 save_lists_for_bookmark <- FALSE # libraries.R FALSE
 save_tables_individually_filter_in <- FALSE # libraries.R TRUE
 save_tables_individually <- TRUE # libraries.R TRUE
-
-# if (save_tables_individually | save_lists_for_bookmark) {
-#     # output folder
-#     output_folder <- paste0(fs::path_package("extdata", package="tripr"), 
-#         "/output/output_tables_", trunc(as.numeric(Sys.time())))
-#     if (!file.exists(paste0(output_folder))) {
-#         fs::dir_create(paste0(output_folder))
-#     }
-# }
