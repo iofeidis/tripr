@@ -219,7 +219,6 @@ libraries are saved (typically \emph{R/library}).
 ## Do not run
 
 run_TRIP(
-   datapath=fs::path_home("Documents", "dataset"),
    output_path=fs::path_home("Documents/my_output"),
    filelist=c("1_Summary.txt", "2_IMGT-gapped-nt-sequences.txt", 
        "4_IMGT-gapped-AA-sequences.txt", "6_Junction.txt"),

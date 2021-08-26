@@ -10,3 +10,4 @@ dev/
 .rproj
 log_files/
 output/
+*.Rproj
