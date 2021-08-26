@@ -64,7 +64,6 @@ bib <- c(
     RColorBrewer = citation("RColorBrewer")[1],
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
-    sessioninfo = citation("sessioninfo")[1],
     shiny = citation("shiny")[1],
     testthat = citation("testthat")[1],
     biocthis = citation("biocthis")[1],
@@ -799,7 +798,6 @@ made possible thanks to:
 * `r CRANpkg('plotly')` `r Citep(bib[['plotly']])`
 * `r CRANpkg('RColorBrewer')` `r Citep(bib[['RColorBrewer']])`
 * `r CRANpkg('rmarkdown')` `r Citep(bib[['rmarkdown']])`
-* `r CRANpkg('sessioninfo')` `r Citep(bib[['sessioninfo']])`
 * `r CRANpkg('shiny')` `r Citep(bib[['shiny']])`
 * `r CRANpkg('shinyBS')` `r Citep(bib[['shinyBS']])`
 * `r CRANpkg('testthat')` `r Citep(bib[['testthat']])`
